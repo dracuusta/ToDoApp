@@ -18,20 +18,24 @@ export default class UI{
         this.formEventListener = this.formEventListener.bind(this);
         this.renderProjectsTodos = this.renderProjectsTodos.bind(this);
         this.renderProjects = this.renderProjects.bind(this);
-    
+        this.switchProjectEventListener=this.switchProjectEventListener.bind(this);
         this.attachEventListeners();
     }
      
-     attachEventListeners(){
+        attachEventListeners(){
         const openBtnDiv=document.querySelector('.open-btn');
         const formDiv=document.querySelector('form'); 
+
+
         this.renderProjectsTodos();
         this.renderProjects();
-
+        const projectsDivs=document.querySelectorAll('.project-name');
         openBtnDiv.addEventListener('click',this.toDoEventListener);
         formDiv.addEventListener('submit',this.formEventListener);
-
+        projectsDivs.forEach((projectsDiv)=>{projectsDiv.addEventListener('click',this.switchProjectEventListener)});
     }
+
+
 
         toDoEventListener(e){
             const modal=document.querySelector('[data-modal]');
@@ -57,6 +61,14 @@ export default class UI{
 
         
    };
+
+
+
+   switchProjectEventListener(e){
+   const newCurrProject=e.target.outerText;
+   this.currentProject=newCurrProject;
+   this.attachEventListeners();
+   }
 
    renderProjectsTodos(){
     const projectsDiv=document.querySelector('.project-todos-flexible');
@@ -99,6 +111,7 @@ export default class UI{
             projectNameDiv.classList.add('currentProject');
         }
         projectNameDiv.classList.add('project-name');
+        projectNameDiv.classList.add(projectName);
         projectNameDiv.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg><span>${projectName}</span>`;
         projectsDiv.append(projectNameDiv);
     })

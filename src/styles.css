@@ -52,6 +52,13 @@ body{
     font-weight: bold;
 }
 
+.todo-hdn{
+    display: flex;
+    align-items: center;
+    gap:4px;
+    font-weight: bold;
+    font-size: xx-large;
+}
 
 button{
 display: inline-block;
@@ -95,17 +102,29 @@ button:hover {
     cursor: pointer;
   }
 
+.projects:hover{
+    cursor: pointer;
+}
 
-  .rounded-checkbox:checked {
-    appearance: auto;
-    clip-path: circle(50% at 50% 50%);
-    background-color: blue;
-  }
+.rounded-checkbox:checked {
+    content: ''; /* Remove any content */
+    background-color: rgb(83, 82, 82);
+}
+
+.rounded-checkbox:hover {
+    box-shadow: 0 0 11px rgba(33,33,33,.2); 
+}
 
 
 .project-name{
     display: flex;
     justify-self: left;
     gap: 4px;
+    width: 25vw;
     align-items: center;
+}
+
+.project-name:hover{
+    background-color: #f7ddd1;
+    width: 25vw;
 }
