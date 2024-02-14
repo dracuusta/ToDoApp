@@ -11,20 +11,22 @@ export default class UI{
         this.currentProject="inbox";
         this.todoList.getProject("inbox").addTask(new Tasks("Finish Brushing","study",new Date("2022-03-25"),"urgent"));
         this.todoList.getProject("inbox").addTask(new Tasks("Get Grocceries","study",new Date("2019-03-25"),"urgent"));
+        this.todoList.getProject("school").addTask(new Tasks("Get Grocceries","study",new Date("2019-03-25"),"urgent"));
         
         this.attachEventListeners = this.attachEventListeners.bind(this);
         this.toDoEventListener = this.toDoEventListener.bind(this);
-    this.formEventListener = this.formEventListener.bind(this);
-    this.renderProjects = this.renderProjects.bind(this);
+        this.formEventListener = this.formEventListener.bind(this);
+        this.renderProjectsTodos = this.renderProjectsTodos.bind(this);
+        this.renderProjects = this.renderProjects.bind(this);
     
-    this.attachEventListeners();
+        this.attachEventListeners();
     }
      
      attachEventListeners(){
         const openBtnDiv=document.querySelector('.open-btn');
         const formDiv=document.querySelector('form'); 
+        this.renderProjectsTodos();
         this.renderProjects();
-
 
         openBtnDiv.addEventListener('click',this.toDoEventListener);
         formDiv.addEventListener('submit',this.formEventListener);
@@ -39,7 +41,7 @@ export default class UI{
 
     formEventListener(e){
         e.preventDefault();
-        
+        console.log('clicked');
         const title=document.getElementById('title').value;
         const description=document.getElementById('description').value;
         const priority=document.getElementById('priority').text;
@@ -48,7 +50,7 @@ export default class UI{
         const task=new Tasks(title,description,dueDate,priority);
         
         this.todoList.getProject(this.currentProject).addTask(task);
-        this.renderProjects();
+        this.renderProjectsTodos();
         const modal=document.querySelector('[data-modal]');
         modal.close();
        
@@ -56,13 +58,13 @@ export default class UI{
         
    };
 
-   renderProjects(){
+   renderProjectsTodos(){
     const projectsDiv=document.querySelector('.project-todos-flexible');
-    console.log(this.todoList);
     projectsDiv.innerHTML="";
    this.todoList.projects.forEach((project)=>{
        if(project.tasks){
         project.tasks.forEach((task, index) => {
+            if(this.currentProject===project.name){
             const title=task.title;
             const dueDate=format(task.dueDate,"dd-MMMM-yyyy");
             const cardDiv=document.createElement('div');
@@ -78,11 +80,28 @@ export default class UI{
             dueDateDiv.innerText=`Due-Date: ${dueDate}`;
             cardDiv.append(inputCheckBoxDiv,titleDiv,dueDateDiv);
             projectsDiv.append(cardDiv);
-          });
+       }});
        }
     });
-    
+   }
 
+
+
+   renderProjects(){
+    const projectsDiv=document.querySelector('.projects');
+    projectsDiv.innerHTML="";
+    this.todoList.projects.forEach((project)=>{
+        const projectName=project.name;
+        const projectNameDiv=document.createElement('div');
+        projectNameDiv.innerHTML=``;
+        if(projectName===this.currentProject)
+        {
+            projectNameDiv.classList.add('currentProject');
+        }
+        projectNameDiv.classList.add('project-name');
+        projectNameDiv.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg><span>${projectName}</span>`;
+        projectsDiv.append(projectNameDiv);
+    })
    }
     
 }

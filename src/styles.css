@@ -14,11 +14,15 @@ body{
 
 .projects{
     width: 25vw;
+    height: 15vh;
     display: grid;
     grid-template-rows: repeat(auto,5vh);
 }
 
-
+.left-sidebar{
+    background-color:#faf8f7;
+    height:100vh;
+}
 .main-container{
     width: 80vw;
 }
@@ -70,6 +74,14 @@ button:hover {
     box-shadow: 0 0 0 0 #fff, 0 0 0 3px;
 }
 
+.hdn-banner{
+    margin-left:30vw;
+}
+
+.currentProject{
+    background-color: #e5b6a0;
+    width: 25vw;
+}
 
 .rounded-checkbox {
     width:35px;
@@ -90,3 +102,10 @@ button:hover {
     background-color: blue;
   }
 
+
+.project-name{
+    display: flex;
+    justify-self: left;
+    gap: 4px;
+    align-items: center;
+}
