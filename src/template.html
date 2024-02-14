@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>ToDo</title>
+        <title>TODOest</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
@@ -20,17 +20,17 @@
                 <button style="display:flex; height:5vh; gap:8px; margin-top:10px; align-items: center; margin-bottom: 10px" class="open-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-circle"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>   Add new TO-DOs</button>
                 <dialog data-modal>
                 <form method="dialog">
-                    <input id="title" type="text" placeholder="title" />
-                    <input id="description" type="text" placeholder="description"/>
-                    <input id="dueDate" type="date" />
-                    <label for="Priority">Choose a Priority:</label>
+                    <input id="title" class="input-frm" type="text" placeholder="Title" />
+                    <input id="description" class="input-frm" type="text" placeholder="Description"/>
+                    <input id="dueDate" class="input-frm" type="date" />
+                    <label for="Priority">Choose a Task Priority:</label>
                         <select id="priority">
                        <option value="Red">Red</option>
                         <option value="Orange">Orange</option>
                         <option value="Blue">Blue</option>
                         <option value="Yellow">Yellow</option>
                     </select>
-                    <button type="submit">Submit</button>
+                    <button class="submit" type="submit">Submit</button>
                 </form>
                 </dialog>
                 <div class="project-todos-flexible"></div>

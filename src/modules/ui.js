@@ -8,16 +8,17 @@ export default class UI{
 
     constructor(){
         this.todoList= new TodoList();
-        this.currentProject="inbox";
-        this.todoList.getProject("inbox").addTask(new Tasks("Finish Brushing","study",new Date("2022-03-25"),"urgent"));
-        this.todoList.getProject("inbox").addTask(new Tasks("Get Grocceries","study",new Date("2019-03-25"),"urgent"));
-        this.todoList.getProject("school").addTask(new Tasks("Get Grocceries","study",new Date("2019-03-25"),"urgent"));
+        this.currentProject="Inbox";
+        this.todoList.getProject("Inbox").addTask(new Tasks("Finish Brushing","study",new Date("2022-03-25"),"urgent"));
+        this.todoList.getProject("Inbox").addTask(new Tasks("Get Grocceries","study",new Date("2019-03-25"),"urgent"));
+        this.todoList.getProject("School").addTask(new Tasks("Study for the upcoming SAT","Break down your Tasks and study them effectively",new Date("2019-03-25"),"urgent"));
         
         this.attachEventListeners = this.attachEventListeners.bind(this);
         this.toDoEventListener = this.toDoEventListener.bind(this);
         this.formEventListener = this.formEventListener.bind(this);
         this.renderProjectsTodos = this.renderProjectsTodos.bind(this);
         this.renderProjects = this.renderProjects.bind(this);
+        this.removeCurrentParent=this.removeCurrentParent.bind(this);
         this.switchProjectEventListener=this.switchProjectEventListener.bind(this);
         this.attachEventListeners();
     }
@@ -25,18 +26,27 @@ export default class UI{
         attachEventListeners(){
         const openBtnDiv=document.querySelector('.open-btn');
         const formDiv=document.querySelector('form'); 
-
-
+        document.getElementById("dueDate").defaultValue = "2014-02-09";
         this.renderProjectsTodos();
         this.renderProjects();
         const projectsDivs=document.querySelectorAll('.project-name');
         openBtnDiv.addEventListener('click',this.toDoEventListener);
         formDiv.addEventListener('submit',this.formEventListener);
+        const checkBoxs=document.querySelectorAll('.rounded-checkbox');
         projectsDivs.forEach((projectsDiv)=>{projectsDiv.addEventListener('click',this.switchProjectEventListener)});
+        checkBoxs.forEach((checkBox)=>{checkBox.addEventListener('click',e=>{
+            const parentNode=checkBox.parentNode;
+            this.removeCurrentParent(parentNode);
+        })});
     }
 
 
-
+        removeCurrentParent(parentNode)
+        {
+            const projectsDiv=document.querySelector('.project-todos-flexible');
+            const index=parentNode.dataset.index;
+            projectsDiv.removeChild(parentNode);
+        }
         toDoEventListener(e){
             const modal=document.querySelector('[data-modal]');
             modal.showModal();
@@ -57,7 +67,7 @@ export default class UI{
         this.renderProjectsTodos();
         const modal=document.querySelector('[data-modal]');
         modal.close();
-       
+       this.attachEventListeners();
 
         
    };
@@ -90,6 +100,7 @@ export default class UI{
             titleDiv.setAttribute('id','title-text');
             const dueDateDiv=document.createElement('div');
             dueDateDiv.innerText=`Due-Date: ${dueDate}`;
+            cardDiv.dataset.index=index;
             cardDiv.append(inputCheckBoxDiv,titleDiv,dueDateDiv);
             projectsDiv.append(cardDiv);
        }});
