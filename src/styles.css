@@ -27,6 +27,18 @@ body{
     width: 80vw;
 }
 
+.add-projects{
+    display: flex;
+    height: 5vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-projects:hover{
+    background-color: #f7ddd1;
+    border-radius: 15px;
+}
+
 .card{
     margin-top:2px;
     padding: 8px;
@@ -60,11 +72,13 @@ body{
     font-size: xx-large;
 }
 
-button{
+
+
+.open-btn{
 display: inline-block;
 outline: none;
 cursor: pointer;
-border-radius: 3px;
+border-radius: 15px;
 border: 0;
 color: #fff;
 background: #ff5000;
@@ -75,7 +89,7 @@ transition-duration: 500ms;
 }
 
 
-button:hover {
+.open-btn:hover {
     background-color: white;
     color:#ff5000;
     box-shadow: 0 0 0 0 #fff, 0 0 0 3px;
@@ -88,6 +102,8 @@ button:hover {
 .currentProject{
     background-color: #e5b6a0;
     width: 25vw;
+    border-radius: 15px;
+
 }
 
 .rounded-checkbox {
@@ -104,6 +120,7 @@ button:hover {
 
 .projects:hover{
     cursor: pointer;
+    border-radius: 20px;
 }
 
 .rounded-checkbox:checked {
@@ -127,4 +144,5 @@ button:hover {
 .project-name:hover{
     background-color: #f7ddd1;
     width: 25vw;
+    border-radius: 15px;
 }
