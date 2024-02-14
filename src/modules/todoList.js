@@ -8,6 +8,7 @@ export default class TodoList{
         this.projects.push(new Project("default"));
     }
 
+
     addProject(name)
     {
        if(this.projects.find(o=>o.name===name)===undefined)
@@ -24,12 +25,10 @@ export default class TodoList{
     {
         if(this.projects.find(o=>o.name===name)===undefined)
         {
-            console.log("not project of such name");
+            this.addProject(name);
         }
-        else{
             const obj=this.projects.find(o=>o.name===name);
             return obj;
-        }
     }
 
     removeProject(name)
@@ -46,13 +45,4 @@ export default class TodoList{
         return this.projects;
     }
 
-
-    viewTodosProjects(){
-        let projectAccum={};
-        this.projects.forEach((project)=>{
-            const { title, dueDate } = project.tasks[0] && project.tasks[0].title && project.tasks[0].dueDate ? project.tasks[0] : { title: undefined, dueDate: undefined };
-            projectAccum+={title,dueDate};
-        });
-        return projectAccum;
-    }
 }
