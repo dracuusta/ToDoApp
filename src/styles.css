@@ -1,0 +1,25 @@
+.container{
+    display: flex;
+}
+
+.left-sidebar{
+    width: 25vw;
+    display: grid;
+}
+
+.fixed-projects{
+    display: grid;
+    width: 25vw;
+    grid-template-rows: repeat(3,5vh);
+}
+
+.flexible-container{
+    display: grid;
+    width: 25vw;
+    grid-template-rows: repeat(100,5vh);
+}
+
+.main-container{
+    width: 80vw;
+}
+

@@ -1,0 +1,29 @@
+{
+  "name": "todoapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dracuusta/ToDoApp.git"
+  },
+  "author": "dracc @ssrinet10@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dracuusta/ToDoApp/issues"
+  },
+  "homepage": "https://github.com/dracuusta/ToDoApp#readme",
+  "devDependencies": {
+    "css-loader": "^6.10.0",
+    "html-webpack-plugin": "^5.6.0",
+    "style-loader": "^3.3.4",
+    "webpack": "^5.90.1",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "date-fns": "^3.3.1"
+  }
+}
