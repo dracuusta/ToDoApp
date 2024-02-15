@@ -1,10 +1,11 @@
 import ToDo from "./tasks";
+import Storage from "./storage";
 
 
 export default class Project{
-    constructor(name){
+    constructor(name, tasks){
         this.name=name;
-        this.tasks=[];
+        this.tasks=tasks;
     }
 
 
@@ -17,9 +18,10 @@ export default class Project{
         return this.tasks;
     }
 
-    removeTask(name){
-        const indexOfTask=this.tasks.findIndex(i=>i.name===name);
-        this.tasks.splice(indexOfTask,1);
+    removeTaskAtIndex(index) {
+        if (index >= 0 && index < this.tasks.length) {
+            this.tasks.splice(index, 1);
+        }
     }
 }
 

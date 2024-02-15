@@ -2,16 +2,32 @@ import Project from "./project";
 import Tasks from "./tasks";
 import TodoList from "./todoList";
 import { format } from 'date-fns';
-
+import Storage from "./storage";
 
 export default class UI{
 
     constructor(){
-        this.todoList= new TodoList();
+
+        const localStorageItems=Storage.getProjectTodos() || {projects:[]};
+        let isDefaultProject = false;
+        const projects = localStorageItems.projects.map(item => {
+            isDefaultProject = item.name === "Inbox";
+            return new Project(item.name, 
+                item.tasks.map((task) => new Tasks(task.title, task.description, task.dueDate, task.priority))
+            )
+        })
+        
+
+        
+        if(!isDefaultProject) projects.push(new Project("Inbox", []));
+
+
+        this.todoList= new TodoList(projects);
+
         this.currentProject="Inbox";
         this.todoList.getProject("Inbox").addTask(new Tasks("Finish Brushing","study",new Date("2022-03-25"),"urgent"));
         this.todoList.getProject("Inbox").addTask(new Tasks("Get Grocceries","study",new Date("2019-03-25"),"urgent"));
-        this.todoList.getProject("School").addTask(new Tasks("Study for the upcoming SAT","Break down your Tasks and study them effectively",new Date("2019-03-25"),"urgent"));
+        // this.todoList.getProject("School").addTask(new Tasks("Study for the upcoming SAT","Break down your Tasks and study them effectively",new Date("2019-03-25"),"urgent"));
         
         this.attachEventListeners = this.attachEventListeners.bind(this);
         this.toDoEventListener = this.toDoEventListener.bind(this);
@@ -35,13 +51,16 @@ export default class UI{
         const checkBoxs=document.querySelectorAll('.rounded-checkbox');
         projectsDivs.forEach((projectsDiv)=>{projectsDiv.addEventListener('click',this.switchProjectEventListener)});
         checkBoxs.forEach((checkBox)=>{checkBox.addEventListener('click',e=>{
+            
             const parentNode=checkBox.parentNode;
-            this.removeCurrentParent(parentNode);
+            console.log(this.todoList.projects);
+            this.todoList.removeProjectTask(this.currentProject,parentNode.dataset.index);
+            this.removeCurrentParent(parentNode,e);
         })});
     }
 
 
-        removeCurrentParent(parentNode)
+        removeCurrentParent(parentNode,e)
         {
             const projectsDiv=document.querySelector('.project-todos-flexible');
             const index=parentNode.dataset.index;
@@ -64,6 +83,7 @@ export default class UI{
         const task=new Tasks(title,description,dueDate,priority);
         
         this.todoList.getProject(this.currentProject).addTask(task);
+        Storage.addProjectTodos(this.todoList);
         this.renderProjectsTodos();
         const modal=document.querySelector('[data-modal]');
         modal.close();

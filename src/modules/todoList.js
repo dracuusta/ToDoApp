@@ -3,15 +3,14 @@ import Tasks from "./tasks";
 
 
 export default class TodoList{
-    constructor(){
-        this.projects=[];
-        this.projects.push(new Project("Home"));
+    constructor(projects){
+        this.projects=projects;
     }
 
 
     addProject(name)
     {
-       if(this.projects.find(o=>o.name===name)===undefined)
+       if(this.projects.find(o=>o.name===name))
        {
             const newProject=new Project(name);
             this.projects.push(newProject);
@@ -25,24 +24,33 @@ export default class TodoList{
     {
         if(this.projects.find(o=>o.name===name)===undefined)
         {
+            console.log()
             this.addProject(name);
         }
             const obj=this.projects.find(o=>o.name===name);
             return obj;
     }
 
-    removeProject(name)
-    {
-        const indexOfProject=this.projects.findIndex(i=>i.name===name);
-        if(indexOfProject===-1)
-        {
-            console.log(`Project with name ${name} not present`);
+    removeProjectTask(projectName, index) {
+        const project = this.projects.find(i => i.name === projectName);
+        if (project) {
+            project.removeTaskAtIndex(index);
+        } else {
+            console.log(`Project with the name ${projectName} not found.`);
         }
-        this.projects.splice(indexOfProject,1);
     }
 
     viewProjects(){
         return this.projects;
+    }
+
+    hasProject(name){
+        if(this.projects.find(o=>o.name===name)===undefined){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
 }
