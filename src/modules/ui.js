@@ -18,16 +18,18 @@ export default class UI{
         })
         
 
-        
-        if(!isDefaultProject) projects.push(new Project("Inbox", []));
+        if(Object.keys(projects).length===0)
+         projects.push(new Project("Inbox", []));
 
 
         this.todoList= new TodoList(projects);
-
+        
         this.currentProject="Inbox";
+        console.log(this.todoList.projects[0].tasks.length);
+        if(this.todoList.projects[0].tasks.length===0){
         this.todoList.getProject("Inbox").addTask(new Tasks("Finish Brushing","study",new Date("2022-03-25"),"urgent"));
         this.todoList.getProject("Inbox").addTask(new Tasks("Get Grocceries","study",new Date("2019-03-25"),"urgent"));
-        // this.todoList.getProject("School").addTask(new Tasks("Study for the upcoming SAT","Break down your Tasks and study them effectively",new Date("2019-03-25"),"urgent"));
+        }
         
         this.attachEventListeners = this.attachEventListeners.bind(this);
         this.toDoEventListener = this.toDoEventListener.bind(this);
@@ -36,12 +38,16 @@ export default class UI{
         this.renderProjects = this.renderProjects.bind(this);
         this.removeCurrentParent=this.removeCurrentParent.bind(this);
         this.switchProjectEventListener=this.switchProjectEventListener.bind(this);
+        this.addNewProject=this.addNewProject.bind(this);
         this.attachEventListeners();
     }
+     
+
      
         attachEventListeners(){
         const openBtnDiv=document.querySelector('.open-btn');
         const formDiv=document.querySelector('form'); 
+        const addProjectsBtnDiv=document.querySelector('.add-projects-btn');
         document.getElementById("dueDate").defaultValue = "2014-02-09";
         this.renderProjectsTodos();
         this.renderProjects();
@@ -49,17 +55,23 @@ export default class UI{
         openBtnDiv.addEventListener('click',this.toDoEventListener);
         formDiv.addEventListener('submit',this.formEventListener);
         const checkBoxs=document.querySelectorAll('.rounded-checkbox');
+        addProjectsBtnDiv.addEventListener('click',this.addNewProject);
         projectsDivs.forEach((projectsDiv)=>{projectsDiv.addEventListener('click',this.switchProjectEventListener)});
         checkBoxs.forEach((checkBox)=>{checkBox.addEventListener('click',e=>{
-            
             const parentNode=checkBox.parentNode;
-            console.log(this.todoList.projects);
-            this.todoList.removeProjectTask(this.currentProject,parentNode.dataset.index);
+            this.todoList.removeProjectTask(parentNode.dataset.projectName,parentNode.dataset.title);
             this.removeCurrentParent(parentNode,e);
+            Storage.addProjectTodos(this.todoList);
         })});
     }
 
-
+        addNewProject(e){
+            const inputValue=document.getElementById('project-name-input').value;
+            this.todoList.addProject(inputValue);
+            this.currentProject=inputValue;
+            this.attachEventListeners();
+            Storage.addProjectTodos(this.todoList);
+        }
         removeCurrentParent(parentNode,e)
         {
             const projectsDiv=document.querySelector('.project-todos-flexible');
@@ -120,12 +132,14 @@ export default class UI{
             titleDiv.setAttribute('id','title-text');
             const dueDateDiv=document.createElement('div');
             dueDateDiv.innerText=`Due-Date: ${dueDate}`;
-            cardDiv.dataset.index=index;
+            cardDiv.dataset.title=title;
+            cardDiv.dataset.projectName=project.name;
             cardDiv.append(inputCheckBoxDiv,titleDiv,dueDateDiv);
             projectsDiv.append(cardDiv);
        }});
        }
     });
+    Storage.addProjectTodos(this.todoList);
    }
 
 

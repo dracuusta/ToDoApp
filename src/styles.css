@@ -132,7 +132,7 @@ transition-duration: 500ms;
 }
 
 .rounded-checkbox:hover {
-    box-shadow: 0 3px 11px rgba(33,33,33,.2); 
+    box-shadow: 0 0 11px rgba(33,33,33,.2); 
 }
 
 
@@ -162,11 +162,6 @@ transition-duration: 500ms;
 
 }
 
-
-#description{
-    height: 10vh;
-}
-
 .input-frm:focus {
     background-color: white;
   }
@@ -178,6 +173,18 @@ transition-duration: 500ms;
     padding-left: 40px;
   }
 
+#project-name-input{
+    margin-left: 110px;
+    border:none;
+    height:3vh;
+    background-color: #e5b6a0;
+    
+}
+
+#project-name-input:focus{
+    background-color:#e5b6a0;
+    border-color: #f4bda3;
+}
 
 
 
@@ -197,11 +204,4 @@ transition-duration: 500ms;
   }
   
 
-  .submit {
-    background-color:#ff5000; /* Green background for the submit button */
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
   
- 
